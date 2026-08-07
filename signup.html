@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRM - რეგისტრაცია</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/guard.js"></script>
+  </head>
+  <body class="auth-body">
+    <main class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2>ანგარიშის შექმნა</h2>
+          <p>შეავსეთ მონაცემები CRM-ში დასარეგისტრირებლად</p>
+        </div>
+
+        <!-- რეგისტრაციის ფორმა -->
+        <form id="signup-form" novalidate>
+          <div class="form-group">
+            <label for="fullName">სრული სახელი *</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="გიორგი გიორგაძე"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">ელ-ფოსტა *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="giorgi@gmail.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="company">კომპანია (არასავალდებულო)</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              placeholder="შპს ჩემი კომპანია"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">პაროლი *</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="მინ. 8 სიმბოლო, 1 ასო, 1 ციფრი"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">განმეორებითი პაროლი *</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="გაიმეორეთ პაროლი"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            რეგისტრაცია
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          <p>უკვე გაქვთ ანგარიში? <a href="index.html">შესვლა</a></p>
+        </div>
+      </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+  </body>
+</html>

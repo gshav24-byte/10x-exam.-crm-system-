@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRM - შესვლა</title>
+
+    <!-- CSS სტილები -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- 1. Auth Guard (აუცილებლად Head-ში! გვერდის გამოჩენამდე ამოწმებს სესიას) -->
+    <script src="js/guard.js"></script>
+  </head>
+  <body class="auth-body">
+    <main class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2>მოგესალმებით CRM-ში</h2>
+          <p>გთხოვთ გაიაროთ ავტორიზაცია</p>
+        </div>
+
+        <!-- ავტორიზაციის ფორმა -->
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label for="login-email">ელ-ფოსტა *</label>
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              placeholder="მაგ: user@company.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">პაროლი *</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">შესვლა</button>
+        </form>
+
+        <div class="auth-footer">
+          <p>არ გაქვთ ანგარიში? <a href="signup.html">დარეგისტრირდით</a></p>
+        </div>
+      </div>
+    </main>
+
+    <!-- JS ლოგიკა DOM-ის ჩატვირთვის შემდეგ -->
+    <script src="js/auth.js"></script>
+  </body>
+</html>
