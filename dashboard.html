@@ -1,159 +1,151 @@
-<!DOCTYPE html>
-<html lang="ka">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM - დეშბორდი</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/guard.js"></script>
-</head>
-<body>
-
-    <!-- Navbar -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10X CRM - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/guard.js"></script>
+  </head>
+  <body>
+    <!-- Navbar (P0) -->
     <header class="navbar">
-        <div class="navbar-container">
-            <h1 class="logo">CRM System</h1>
-            <button onclick="logout()" class="btn btn-secondary">გასვლა</button>
+      <div class="navbar-container">
+        <a href="dashboard.html" class="logo">10X CRM</a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-item active">Dashboard</a>
+          <a href="clients.html" class="nav-item">Clients</a>
+          <a href="profile.html" class="nav-item">Profile</a>
+        </nav>
+        <div class="nav-actions">
+          <button id="theme-toggle-btn" class="btn btn-secondary btn-icon-text">
+            🌓 Theme
+          </button>
+          <button onclick="logout()" class="btn btn-secondary">Logout</button>
         </div>
+      </div>
     </header>
 
-    <!-- Main Content -->
     <main class="container">
-        
-        <!-- Header & Top Actions -->
-        <div class="page-header flex-between">
-            <h2>კლიენტების ბაზა</h2>
-            <div class="action-buttons">
-                <button id="reset-data-btn" class="btn btn-secondary" title="მონაცემთა საწყის მდგომარეობაში დაბრუნება">🔄 აღდგენა</button>
-                <button id="export-csv-btn" class="btn btn-secondary">📥 CSV ექსპორტი</button>
-                <button id="open-add-modal-btn" class="btn btn-primary">+ ახალი კლიენტი</button>
-            </div>
+      <!-- P3.1 Welcome Bar & Top Actions -->
+      <div class="welcome-bar flex-between">
+        <div>
+          <h2 id="welcome-message">Welcome back!</h2>
+          <div class="live-clock" id="live-clock">--/--/---- --:--:--</div>
+        </div>
+        <!-- აღდგენისა და ექსპორტის ღილაკები -->
+        <div class="action-buttons flex-align-center">
+          <button
+            id="reset-data-btn"
+            class="btn btn-secondary"
+            title="მონაცემთა აღდგენა"
+          >
+            🔄 აღდგენა
+          </button>
+          <button id="export-csv-btn" class="btn btn-secondary">
+            📥 CSV ექსპორტი
+          </button>
+        </div>
+      </div>
+
+      <!-- P3.2 Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-title">Total Clients</span>
+          <span id="stat-total" class="stat-value">0</span>
+        </div>
+        <div class="stat-card stat-card-active">
+          <span class="stat-title">Active Deals</span>
+          <span id="stat-active-deals" class="stat-value">0</span>
+        </div>
+        <div class="stat-card stat-card-won">
+          <span class="stat-title">Won Revenue</span>
+          <span id="stat-won-revenue" class="stat-value">$0</span>
+        </div>
+        <div class="stat-card stat-card-new">
+          <span class="stat-title">New This Week</span>
+          <span id="stat-new-this-week" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <!-- P3.3 Pipeline Overview -->
+      <section class="dashboard-section">
+        <h3>Pipeline Overview</h3>
+        <div class="pipeline-overview-grid" id="pipeline-overview">
+          <div class="pipeline-box lead">
+            <span class="pipeline-label">Lead</span>
+            <span class="pipeline-count" id="pipe-lead">0</span>
+          </div>
+          <div class="pipeline-box contacted">
+            <span class="pipeline-label">Contacted</span>
+            <span class="pipeline-count" id="pipe-contacted">0</span>
+          </div>
+          <div class="pipeline-box won">
+            <span class="pipeline-label">Won</span>
+            <span class="pipeline-count" id="pipe-won">0</span>
+          </div>
+          <div class="pipeline-box lost">
+            <span class="pipeline-label">Lost</span>
+            <span class="pipeline-count" id="pipe-lost">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- P3.4 Recent Clients + პაგინაცია -->
+      <section class="dashboard-section">
+        <div class="section-header flex-between">
+          <h3>Clients List</h3>
+          <a href="clients.html" class="link-btn">View all clients →</a>
         </div>
 
-        <!-- Dashboard Stats Cards (სტატისტიკის ვიჯეტები) -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-title">სულ კლიენტები</span>
-                <span id="stat-total" class="stat-value">0</span>
-            </div>
-            <div class="stat-card stat-card-active">
-                <span class="stat-title">Active</span>
-                <span id="stat-active" class="stat-value">0</span>
-            </div>
-            <div class="stat-card stat-card-lead">
-                <span class="stat-title">Lead</span>
-                <span id="stat-lead" class="stat-value">0</span>
-            </div>
-            <div class="stat-card stat-card-inactive">
-                <span class="stat-title">Inactive</span>
-                <span id="stat-inactive" class="stat-value">0</span>
-            </div>
-        </div>
-
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="ძებნა სახელით ან ელ-ფოსტით...">
-            </div>
-            
-            <div class="filter-box">
-                <select id="status-filter" aria-label="სტატუსით ფილტრაცია">
-                    <option value="all">ყველა სტატუსი</option>
-                    <option value="Active">Active</option>
-                    <option value="Lead">Lead</option>
-                    <option value="Inactive">Inactive</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Loader -->
-        <div id="loader" class="loader">
-            <div class="spinner"></div>
-            <p>მონაცემები იტვირთება...</p>
-        </div>
-
-        <!-- Table -->
         <div class="table-responsive">
-            <table class="clients-table">
-                <thead>
-                    <tr>
-                        <th class="sortable" data-sort="name">სახელი / გვარი <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-sort="email">ელ-ფოსტა <span class="sort-icon">⇅</span></th>
-                        <th>ტელეფონი</th>
-                        <th class="sortable" data-sort="company">კომპანია <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-sort="status">სტატუსი <span class="sort-icon">⇅</span></th>
-                        <th>მოქმედება</th>
-                    </tr>
-                </thead>
-                <tbody id="clients-tbody"></tbody>
-            </table>
+          <table class="clients-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Added Date</th>
+              </tr>
+            </thead>
+            <tbody id="recent-clients-tbody">
+              <tr>
+                <td colspan="4" class="text-center">Loading clients...</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <!-- Pagination Bar -->
-        <div class="pagination-container">
-            <div class="pagination-info" id="pagination-info">
-                გამოჩენილია 0-0 / 0-დან
-            </div>
-            <div class="pagination-controls">
-                <button id="prev-page-btn" class="btn btn-small btn-secondary" disabled>◀ წინა</button>
-                <span id="page-numbers" class="page-numbers"></span>
-                <button id="next-page-btn" class="btn btn-small btn-secondary" disabled>შემდეგი ▶</button>
-            </div>
+        <!-- პაგინაციის ბარი (1, 2, ▶ გვერდები) -->
+        <div class="pagination-container flex-between margin-top-10">
+          <div class="pagination-info" id="pagination-info">
+            გამოჩენილია 0-0 / 0-დან
+          </div>
+          <div class="pagination-controls flex-align-center">
+            <button
+              id="prev-page-btn"
+              class="btn btn-small btn-secondary"
+              disabled
+            >
+              ◀ წინა
+            </button>
+            <span
+              id="page-numbers"
+              class="page-numbers flex-align-center"
+            ></span>
+            <button
+              id="next-page-btn"
+              class="btn btn-small btn-secondary"
+              disabled
+            >
+              შემდეგი ▶
+            </button>
+          </div>
         </div>
-
+      </section>
     </main>
 
-    <!-- Modal (კლიენტის დამატება / რედაქტირება) -->
-    <div id="client-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">ახალი კლიენტის დამატება</h3>
-                <button id="close-modal-btn" class="close-btn">&times;</button>
-            </div>
-
-            <form id="client-form" novalidate>
-                <input type="hidden" id="client-id">
-
-                <div class="form-group">
-                    <label for="client-name">სრული სახელი *</label>
-                    <input type="text" id="client-name" placeholder="გიორგი ბერიძე">
-                </div>
-
-                <div class="form-group">
-                    <label for="client-email">ელ-ფოსტა *</label>
-                    <input type="email" id="client-email" placeholder="giorgi@gmail.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="client-phone">ტელეფონი *</label>
-                    <input type="text" id="client-phone" placeholder="599123456">
-                </div>
-
-                <div class="form-group">
-                    <label for="client-company">კომპანია</label>
-                    <input type="text" id="client-company" placeholder="შპს კომპანია">
-                </div>
-
-                <div class="form-group">
-                    <label for="client-status">სტატუსი *</label>
-                    <select id="client-status">
-                        <option value="Active">Active</option>
-                        <option value="Lead">Lead</option>
-                        <option value="Inactive">Inactive</option>
-                    </select>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" id="cancel-modal-btn" class="btn btn-secondary">გაუქმება</button>
-                    <button type="submit" class="btn btn-primary">შენახვა</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Toast Notifications Container -->
     <div id="toast-container" class="toast-container"></div>
-
-    <script src="./js/clients.js"></script>
-</body>
+    <script src="js/dashboard.js"></script>
+  </body>
 </html>

@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ka">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CRM - რეგისტრაცია</title>
+    <title>10X CRM - Create Account</title>
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/guard.js"></script>
   </head>
@@ -11,73 +11,56 @@
     <main class="auth-container">
       <div class="auth-card">
         <div class="auth-header">
-          <h2>ანგარიშის შექმნა</h2>
-          <p>შეავსეთ მონაცემები CRM-ში დასარეგისტრირებლად</p>
+          <h2>Create your account</h2>
+          <p>Start managing your client pipelines today</p>
         </div>
 
-        <!-- რეგისტრაციის ფორმა -->
         <form id="signup-form" novalidate>
           <div class="form-group">
-            <label for="fullName">სრული სახელი *</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              placeholder="გიორგი გიორგაძე"
-            />
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" placeholder="Nino Beridze" />
           </div>
 
           <div class="form-group">
-            <label for="email">ელ-ფოსტა *</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="giorgi@gmail.com"
-            />
+            <label for="email">Email *</label>
+            <input type="email" id="email" placeholder="nino@example.com" />
           </div>
 
           <div class="form-group">
-            <label for="company">კომპანია (არასავალდებულო)</label>
-            <input
-              type="text"
-              id="company"
-              name="company"
-              placeholder="შპს ჩემი კომპანია"
-            />
+            <label for="company">Company (optional)</label>
+            <input type="text" id="company" placeholder="Company (optional)" />
           </div>
 
           <div class="form-group">
-            <label for="password">პაროლი *</label>
+            <label for="password">Password *</label>
             <input
               type="password"
               id="password"
-              name="password"
-              placeholder="მინ. 8 სიმბოლო, 1 ასო, 1 ციფრი"
+              placeholder="Min. 8 chars, letter & number"
             />
           </div>
 
           <div class="form-group">
-            <label for="confirmPassword">განმეორებითი პაროლი *</label>
+            <label for="confirmPassword">Confirm Password *</label>
             <input
               type="password"
               id="confirmPassword"
-              name="confirmPassword"
-              placeholder="გაიმეორეთ პაროლი"
+              placeholder="Repeat password"
             />
           </div>
 
           <button type="submit" class="btn btn-primary btn-full">
-            რეგისტრაცია
+            Create Account
           </button>
         </form>
 
         <div class="auth-footer">
-          <p>უკვე გაქვთ ანგარიში? <a href="index.html">შესვლა</a></p>
+          <p>Already have an account? <a href="index.html">Log in</a></p>
         </div>
       </div>
     </main>
 
+    <div id="toast-container" class="toast-container"></div>
     <script src="js/auth.js"></script>
   </body>
 </html>

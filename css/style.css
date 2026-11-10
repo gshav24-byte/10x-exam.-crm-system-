@@ -1,541 +1,618 @@
 /* ==========================================
-   1. BASE & RESET (საბაზისო პარამეტრები)
+   1. BASE & CSS VARIABLES (Dark Default)
    ========================================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 :root {
-    --primary-color: #4f46e5;
-    --primary-hover: #4338ca;
-    --bg-color: #f3f4f6;
-    --card-bg: #ffffff;
-    --text-main: #1f2937;
-    --text-muted: #6b7280;
-    --border-color: #d1d5db;
-    --error-color: #ef4444;
-    --success-color: #10b981;
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --error-color: #ef4444;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --input-bg: #0f172a;
+}
+
+body.light-theme {
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --input-bg: #ffffff;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+.max-width-small {
+  max-width: 600px;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-align-center {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.text-center {
+  text-align: center;
+}
+.text-muted {
+  color: var(--text-muted);
+}
+.text-small {
+  font-size: 13px;
+}
+.margin-bottom-10 {
+  margin-bottom: 10px;
 }
 
 /* ==========================================
-   2. AUTH LAYOUT (ავტორიზაციის ცენტრირება)
-   ========================================== */
-.auth-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-.auth-container {
-    width: 100%;
-    max-width: 420px;
-}
-
-.auth-card {
-    background: var(--card-bg);
-    padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.auth-header {
-    text-align: center;
-    margin-bottom: 24px;
-}
-
-.auth-header h2 {
-    font-size: 24px;
-    margin-bottom: 8px;
-    color: var(--text-main);
-}
-
-.auth-header p {
-    font-size: 14px;
-    color: var(--text-muted);
-}
-
-/* ==========================================
-   3. FORMS & INPUTS (ფორმის ელემენტები)
-   ========================================== */
-.form-group {
-    margin-bottom: 18px;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: var(--text-main);
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    outline: none;
-}
-
-.form-group input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-}
-
-/* JS-ით დამატებული Error სტილები */
-.form-group input.input-error {
-    border-color: var(--error-color) !important;
-}
-
-.field-error-text {
-    color: var(--error-color);
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-/* ==========================================
-   4. BUTTONS (ღილაკები)
-   ========================================== */
-.btn {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-hover);
-}
-
-.btn-full {
-    width: 100%;
-    margin-top: 10px;
-}
-
-.auth-footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: var(--text-muted);
-}
-
-.auth-footer a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.auth-footer a:hover {
-    text-decoration: underline;
-}
-
-/* ==========================================
-   5. TOAST NOTIFICATIONS (მცურავი შეტყობინება)
-   ========================================== */
-.toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 12px 20px;
-    border-radius: 6px;
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    animation: slideIn 0.3s ease-out;
-}
-
-.toast-success {
-    background-color: var(--success-color);
-}
-
-.toast-error {
-    background-color: var(--error-color);
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-/* ==========================================
-   NAVBAR (ზედა მენიუ)
+   2. NAVBAR
    ========================================== */
 .navbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 14px 0;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 14px 0;
 }
 
 .navbar-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.navbar .logo {
-    font-size: 20px;
-    color: #4f46e5;
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-decoration: none;
 }
 
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: var(--text-main);
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
 .btn-secondary {
-    background-color: #e5e7eb;
-    color: #374151;
+  background-color: var(--border-color);
+  color: var(--text-main);
 }
-
 .btn-secondary:hover {
-    background-color: #d1d5db;
+  opacity: 0.9;
 }
-
-/* ==========================================
-   TABLE & DASHBOARD (ცხრილი და დეშბორდი)
-   ========================================== */
-.container {
-    max-width: 1100px;
-    margin: 30px auto;
-    padding: 0 20px;
+.btn-danger {
+  background-color: var(--error-color);
+  color: #ffffff;
 }
-
-.page-header {
-    margin-bottom: 20px;
+.btn-full {
+  width: 100%;
+  margin-top: 10px;
 }
-
-.table-responsive {
-    overflow-x: auto;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.clients-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-.clients-table th, 
-.clients-table td {
-    padding: 14px 16px;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 14px;
-}
-
-.clients-table th {
-    background-color: #f9fafb;
-    color: #4b5563;
-    font-weight: 600;
-}
-
-.clients-table tr:hover {
-    background-color: #f9fafb;
-}
-
-/* Badges (სტატუსის ბეჯები) */
-.badge {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-}
-
-.badge-active { background-color: #d1fae5; color: #065f46; }
-.badge-inactive { background-color: #fee2e2; color: #991b1b; }
-.badge-lead { background-color: #fef3c7; color: #92400e; }
-
-/* Loader (ჩატვირთვის ანიმაცია) */
-.loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    gap: 12px;
-    color: #4f46e5;
-}
-
-.spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid #e5e7eb;
-    border-top-color: #4f46e5;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
 .btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
 }
-/* ==========================================
-   FILTER BAR & MODAL (დღე 3 სტილები)
-   ========================================== */
-
-.flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.link-btn {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
 }
-
-/* ფილტრების ზოლი */
-.filter-bar {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+.link-btn:hover {
+  text-decoration: underline;
 }
 
-.search-box { flex: 1; }
-.search-box input, 
-.filter-box select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
+/* Auth Layout */
+.auth-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+}
+.auth-card {
+  background: var(--card-bg);
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+.auth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.auth-header h2 {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+.auth-header p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.auth-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
 }
 
-/* Modal-ის სტილები */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+/* Forms & Inputs */
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group select,
+.search-box input,
+.sort-box select {
+  padding: 10px 14px;
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.search-box input:focus {
+  border-color: var(--primary-color);
+}
+input.input-error {
+  border-color: var(--error-color) !important;
+}
+.field-error-text {
+  color: var(--error-color);
+  font-size: 12px;
+  margin-top: 4px;
 }
 
-.modal-overlay.active {
-    display: flex;
+/* Dashboard Widgets */
+.welcome-bar {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.live-clock {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
-.modal-content {
-    background: #ffffff;
-    width: 100%;
-    max-width: 450px;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: #6b7280;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
-}
-/* ==========================================
-   PAGINATION, SORTING & TOASTS (დღე 4)
-   ========================================== */
-
-/* პაგინაცია */
-.pagination-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    background: #ffffff;
-    padding: 12px 16px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.pagination-info {
-    font-size: 14px;
-    color: #4b5563;
-}
-
-.pagination-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-small {
-    padding: 6px 12px;
-    font-size: 13px;
-}
-
-.page-numbers {
-    display: flex;
-    gap: 4px;
-}
-
-.btn-page {
-    border: 1px solid #d1d5db;
-    background: #ffffff;
-    color: #374151;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-.btn-page.active {
-    background: #4f46e5;
-    color: #ffffff;
-    border-color: #4f46e5;
-}
-
-.btn-page:hover:not(.active) {
-    background: #f3f4f6;
-}
-
-/* დახარისხებადი სვეტები */
-th.sortable {
-    cursor: pointer;
-    -webkit-user-select: none; /* Safari / Chrome */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* IE / Edge */
-    user-select: none;
-}
-
-th.sortable:hover {
-    background-color: #f3f4f6;
-}
-
-.sort-icon {
-    font-size: 12px;
-    margin-left: 4px;
-    color: #9ca3af;
-}
-
-th.sorted .sort-icon {
-    color: #4f46e5;
-}
-
-/* Toast შეტყობინებები */
-.toast-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 2000;
-}
-
-.toast {
-    padding: 12px 20px;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    animation: slideIn 0.3s ease-out forwards;
-}
-
-.toast-success { background-color: #10b981; }
-.toast-error { background-color: #ef4444; }
-
-.toast.fade-out {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s, transform 0.3s;
-}
-
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-/* ==========================================
-   STATS CARDS & TOP ACTIONS (დღე 5)
-   ========================================== */
-
-.action-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-/* სტატისტიკური ბარათების ბადე (Grid) */
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
 }
-
 .stat-card {
-    background: #ffffff;
-    padding: 16px 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    border-left: 4px solid #4f46e5;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  background: var(--card-bg);
+  padding: 18px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-
-.stat-card-active { border-left-color: #10b981; }
-.stat-card-lead { border-left-color: #f59e0b; }
-.stat-card-inactive { border-left-color: #ef4444; }
-
+.stat-card-active {
+  border-left-color: #3b82f6;
+}
+.stat-card-won {
+  border-left-color: var(--success-color);
+}
+.stat-card-new {
+  border-left-color: var(--warning-color);
+}
 .stat-title {
-    font-size: 13px;
-    color: #6b7280;
-    font-weight: 500;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.stat-value {
-    font-size: 24px;
-    font-weight: 700;
-    color: #111827;
+.dashboard-section {
+  margin-bottom: 30px;
+}
+.dashboard-section h3 {
+  margin-bottom: 14px;
+  font-size: 18px;
+}
+
+.pipeline-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.pipeline-box {
+  background: var(--card-bg);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pipeline-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.pipeline-count {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Table */
+.table-responsive {
+  overflow-x: auto;
+  background: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.clients-table th,
+.clients-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+}
+.clients-table th {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-muted);
+}
+
+/* Badges */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+.badge-lead {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+.badge-contacted {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+.badge-won {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+.badge-lost {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* Toolbar & Chips */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  min-width: 240px;
+}
+.search-box input {
+  width: 100%;
+}
+.filter-chips {
+  display: flex;
+  gap: 8px;
+}
+.chip {
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.chip.active {
+  background: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+}
+
+/* Clients Grid / Cards */
+.clients-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.client-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.client-card:hover {
+  border-color: var(--primary-color);
+}
+.client-card-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.avatar-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--border-color);
+}
+.client-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-overlay.active {
+  display: flex;
+}
+.modal-content {
+  background: var(--card-bg);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 10px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+}
+.modal-large {
+  max-width: 600px;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Details & Notes */
+.details-info-header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.avatar-large {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.divider {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 16px 0;
+}
+.notes-list {
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+.note-item {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+.add-note-box {
+  display: flex;
+  gap: 8px;
+}
+.add-note-box input {
+  flex: 1;
+}
+.reminder-section {
+  margin-top: 16px;
+}
+
+/* Profile Cards */
+.profile-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.initials-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+}
+.profile-section-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.profile-section-card h3 {
+  margin-bottom: 16px;
+}
+.border-danger {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Toasts */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2000;
+}
+.toast {
+  padding: 12px 20px;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.toast-success {
+  background-color: var(--success-color);
+}
+.toast-error {
+  background-color: var(--error-color);
 }

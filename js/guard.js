@@ -1,34 +1,50 @@
 // js/guard.js
 
-function checkAuth() {
-    // 1. ვკითხულობთ სესიას localStorage-დან
-    const session = localStorage.getItem('crm_session');
-    
-    // 2. ვიგებთ მიმდინარე გვერდის დასახელებას
-    const path = window.location.pathname;
-    
-    // 3. ვამოწმებთ, საჯარო გვერდზე ვართ თუ დაცულზე
-    const isAuthPage = path.includes('index.html') || path.includes('signup.html') || path.endsWith('/');
+// 1. Auth Guard (P0.1)
+(function checkAuth() {
+  const session = localStorage.getItem("crm_session");
+  const path = window.location.pathname;
 
-    // თუ სესია არ არსებობს და მომხმარებელი დაცულ გვერდზე შედის -> გადამისამართება ლოგინზე
-    if (!session && !isAuthPage) {
-        window.location.href = 'index.html';
-    }
+  const isPublicPage =
+    path.includes("index.html") ||
+    path.includes("signup.html") ||
+    path === "/" ||
+    path.endsWith("/");
 
-    // თუ სესია არსებობს და მომხმარებელი ლოგინ/რეგისტრაციის გვერდზეა -> გადამისამართება დეშბორდზე
-    if (session && !isAuthPage === false) { 
-        // შენიშვნა: თუ სესია არის და ავტორიზაციის გვერდზე ვართ
-        if (isAuthPage) {
-            window.location.href = 'dashboard.html';
-        }
-    }
-}
+  if (!session && !isPublicPage) {
+    window.location.href = "index.html";
+  } else if (session && isPublicPage) {
+    window.location.href = "dashboard.html";
+  }
+})();
 
-// ლოგაუთის ფუნქცია (გამოიყენება ნავიგაციაში)
+// 2. Theme Manager (P0.3)
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("crm_theme") || "dark";
+  if (savedTheme === "light") {
+    document.body.classList.add("light-theme");
+  }
+
+  const themeBtn = document.getElementById("theme-toggle-btn");
+  if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light-theme");
+      const isLight = document.body.classList.contains("light-theme");
+      localStorage.setItem("crm_theme", isLight ? "light" : "dark");
+    });
+  }
+});
+
+// 3. Logout (P0.2)
 function logout() {
-    localStorage.removeItem('crm_session'); // შლის მხოლოდ სესიას და არა კლიენტებს/იუზერებს!
-    window.location.href = 'index.html';
+  localStorage.removeItem("crm_session");
+  window.location.href = "index.html";
 }
 
-// ფუნქციის დაუყოვნებლივი გამოძახება
-checkAuth();
+// Helper: Get Current Logged User
+function getCurrentUser() {
+  const session = JSON.parse(localStorage.getItem("crm_session"));
+  if (!session) return null;
+  const users = JSON.parse(localStorage.getItem("crm_users")) || [];
+  return users.find((u) => u.email === session.email) || null;
+}
