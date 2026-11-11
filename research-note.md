@@ -9,17 +9,14 @@ Document Name: DummyJSON Documentation — Users Resource
 URL: https://dummyjson.com/docs/users
 
 Search Keywords Used: "DummyJSON users endpoint pagination fetch mock users api post delete"
+After reviewing the documentation, I thoroughly studied the functionality of the DummyJSON API users (`/users`) endpoint, which is used to asynchronously fetch realistic test data for the CRM system.
 
-📝 ქართული რეზიუმე (Georgian Technical Summary)
+I analyzed how the `GET [https://dummyjson.com/users?limit=30](https://dummyjson.com/users?limit=30)` request works and the structure of the JSON object returned by the API (e.g., `firstName`, `lastName`, `email`, `phone`, `company.name`, and `image`).
 
-დოკუმენტაციის გაცნობის შედეგად დეტალურად შევისწავლე DummyJSON API-ის მომხმარებელთა (/users) ენდპოინტის ფუნქციონალი, რომელიც გამოიყენება CRM სისტემისთვის რეალისტური სატესტო მონაცემების ასინქრონულად წამოსაღებად.
+I tested the specifics of the `POST /users/add` and `DELETE /users/{id}` methods and learned from the documentation that the DummyJSON server simulates these operations—it returns a successful response without modifying its central database.
 
-გავაანალიზე, თუ როგორ მუშაობს GET https://dummyjson.com/users?limit=30 მოთხოვნა და რა სტრუქტურის JSON ობიექტს აბრუნებს API (მაგალითად: firstName, lastName, email, phone, company.name და image).
+Based on this technical finding, I made an architectural decision to store the initial data fetched from the API into `localStorage` (under the `crm_clients` key) and perform all subsequent CRUD operations directly within local storage.
 
-შევამოწმე POST /users/add და DELETE /users/{id} მეთოდების სპეციფიკა და დოკუმენტაციიდან შევიტყვე, რომ DummyJSON სერვერი ამ ოპერაციების იმიტაციას აკეთებს — წარმატებულ პასუხს აბრუნებს, თუმცა თავის ცენტრალურ ბაზას არ ცვლის.
+Additionally, thanks to the documentation, I anticipated that attempting to delete a manually added client via `DELETE` would cause the server to return a 404 error. Therefore, I implemented logic in the code to ensure that even upon receiving a 404, the client is still safely removed from the local `localStorage` array.
 
-ამ ტექნიკურ მიგნებაზე დაყრდნობით მივიღე არქიტექტურული გადაწყვეტილება, რომ API-დან წამოღებული პირველადი მონაცემები localStorage-ში (crm_clients გასაღებით) შეგვენახა და ყველა შემდგომი CRUD ცვლილება ლოკალურ მეხსიერებაშივე გაგვეგრძელებინა.
-
-ასევე, დოკუმენტაციის წყალობით წინასწარ განვსაზღვრე, რომ ჩვენ მიერ ხელით დამატებული კლიენტის წაშლისას (DELETE) სერვერი 404 შეცდომას დააბრუნებდა, რის გამოც კოდში დავწერე ლოგიკა, რომ 404-ის შემთხვევაშიც კლიენტი ლოკალური localStorage მასივიდან მაინც უსაფრთხოდ წაიშალოს.
-
-საბოლოო ჯამში, ამ რესურსის გამოყენებამ მომცა სრული ცოდნა, თუ როგორ მუშაობს სერვერთან fetch() ასინქრონული კომუნიკაცია, HTTP request მეთოდები და try/catch შეცდომების დამუშავება.
+Overall, utilizing this resource provided me with a comprehensive understanding of asynchronous `fetch()` communication with a server, HTTP request methods, and `try/catch` error handling.
